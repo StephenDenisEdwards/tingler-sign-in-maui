@@ -29,7 +29,7 @@ namespace SignInMaui.Views
 
         private async void OnSignInClicked(object sender, EventArgs e)
         {
-            await PublicClientSingleton.Instance.AcquireTokenSilentAsync();
+			await PublicClientSingleton.Instance.AcquireTokenSilentAsync();
             await Shell.Current.GoToAsync("claimsview");
         }
         protected override bool OnBackButtonPressed() { return true; }

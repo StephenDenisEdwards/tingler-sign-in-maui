@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Microsoft.Identity.Client;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace MauiAppBasic.Platforms.Android.Resources
 {
@@ -40,12 +40,16 @@ namespace MauiAppBasic.Platforms.Android.Resources
 	{
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
+			Log.Debug("MsalActivity", "Debug message: Start OnCreate() called.");
 			base.OnCreate(savedInstanceState);
+			Log.Debug("MsalActivity", "Debug message: End OnCreate() called.");
 		}
 
 		protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
 		{
+			Log.Debug("MsalActivity", "Debug message: Start OnActivityResult() called.");
 			base.OnActivityResult(requestCode, resultCode, data);
+			Log.Debug("MsalActivity", "Debug message: End OnActivityResult() called.");
 		}
 	}
 }
