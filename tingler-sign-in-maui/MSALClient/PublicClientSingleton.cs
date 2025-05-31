@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
@@ -47,19 +48,27 @@ namespace tingler_sign_in_maui.MSALClient
         [MethodImpl(MethodImplOptions.NoInlining)]
         private PublicClientSingleton()
         {
-            // Load config
-            var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("SignInMaui.appsettings.json");
-            AppConfiguration = new ConfigurationBuilder()
-                .AddJsonStream(stream)
-                .Build();
+	        try
+			{            // Load config
+				var assembly = Assembly.GetExecutingAssembly();
+				using var stream = assembly.GetManifestResourceStream("tingler_sign_in_maui.appsettings.json");
+				AppConfiguration = new ConfigurationBuilder()
+					.AddJsonStream(stream)
+					.Build();
 
 
-            AzureAdConfig azureADConfig = AppConfiguration.GetSection("AzureAd").Get<AzureAdConfig>();
-            this.MSALClientHelper = new MSALClientHelper(azureADConfig);
+				AzureAdConfig azureADConfig = AppConfiguration.GetSection("AzureAd").Get<AzureAdConfig>();
+				this.MSALClientHelper = new MSALClientHelper(azureADConfig);
 
-            DownStreamApiConfig downStreamApiConfig = AppConfiguration.GetSection("DownstreamApi").Get<DownStreamApiConfig>();
-            this.DownstreamApiHelper = new DownstreamApiHelper(downStreamApiConfig, this.MSALClientHelper);
+				DownStreamApiConfig downStreamApiConfig = AppConfiguration.GetSection("DownstreamApi").Get<DownStreamApiConfig>();
+				this.DownstreamApiHelper = new DownstreamApiHelper(downStreamApiConfig, this.MSALClientHelper);
+
+			}
+	        catch (Exception e)
+	        {
+		        Debug.WriteLine(e);
+		        throw;
+	        }
         }
 
         /// <summary>
